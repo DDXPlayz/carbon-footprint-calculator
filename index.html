@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carbon Calculator — Anantam Sustain</title>
+  <meta name="description" content="Calculate, lock and offset a carbon footprint. A tool by Anantam Sustain, the sustainability initiative of Anantam Racing." />
+  <!-- Intentionally unlinked and unindexed for now. Remove noindex when this goes public. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
+
+  <link rel="icon" href="favicon.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="favicon-light.png" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="./" aria-label="Anantam Sustain carbon calculator home">
+        <span class="mark">Anantam</span>
+        <span class="sub">Sustain</span>
+        <span class="tool">Carbon Calculator</span>
+      </a>
+      <div class="header-tools">
+        <div class="seg" role="group" aria-label="Calculation mode" id="mode-switch">
+          <button type="button" data-mode="team" aria-pressed="true">Team</button>
+          <button type="button" data-mode="individual" aria-pressed="false">Individual</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="stepper" aria-label="Steps">
+    <div class="wrap" id="stepper">
+      <button type="button" class="step" data-view="calculate">
+        <span class="n">01</span>
+        <span><span class="t">Calculate</span><span class="s">Enter activities, see the total</span></span>
+      </button>
+      <button type="button" class="step" data-view="lock">
+        <span class="n">02</span>
+        <span><span class="t">Lock</span><span class="s">Freeze one official figure</span></span>
+      </button>
+      <button type="button" class="step" data-view="offset">
+        <span class="n">03</span>
+        <span><span class="t">Offset</span><span class="s">Plan and track against it</span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="app" class="wrap" aria-live="polite"></main>
+
+  <div class="mobile-total" id="mobile-total" hidden>
+    <div>
+      <div class="ui-sm">Running total</div>
+      <div class="num" id="mobile-total-num">0 kg</div>
+    </div>
+    <button type="button" class="btn btn-primary btn-sm" data-action="goto" data-view="lock">Review &amp; lock</button>
+  </div>
+
+  <dialog id="lock-dialog" aria-labelledby="lock-dialog-title">
+    <form method="dialog" class="modal-body" id="lock-form">
+      <div class="kicker">Lock this footprint</div>
+      <h2 id="lock-dialog-title">One number, fixed.</h2>
+      <div class="review-total" id="lock-dialog-total">0<small>kg CO₂e</small></div>
+      <p class="muted" id="lock-dialog-sub"></p>
+      <div class="field wide">
+        <label for="lock-label">Name this footprint</label>
+        <div class="with-unit"><input type="text" id="lock-label" name="label" maxlength="80" placeholder="e.g. 2026 World Finals campaign" /></div>
+      </div>
+      <div class="lock-warning">
+        <strong>What locking does</strong>
+        The total, the inputs behind it and the factor version are frozen with a timestamp and a fingerprint. Nothing can edit them afterwards. If something changes later, you start a new dated version instead.
+      </div>
+      <label class="check"><input type="checkbox" id="lock-confirm" required /> I understand this cannot be edited</label>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-dialog">Not yet</button>
+        <button type="submit" class="btn btn-primary" id="lock-submit" disabled>Lock footprint</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <div class="ui-sm">Anantam Sustain · Team Anantam Racing</div>
+        <div>Data stays in this browser. Export it to keep a copy or move it to another device.</div>
+      </div>
+      <div class="header-tools">
+        <button type="button" class="btn btn-ghost btn-sm" data-action="export">Export data</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-action="import">Import data</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden />
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
